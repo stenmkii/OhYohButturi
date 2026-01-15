@@ -33,14 +33,13 @@
 <div id="app" class="max-w-3xl mx-auto p-4 md:p-8">
     <header class="mb-8 text-center">
         <h1 class="text-3xl font-bold text-slate-800">原子物理・原子核 演習</h1>
-        <p class="text-slate-600 mt-2">光子・物質波 ＆ 原子・原子核 演習システム</p>
+        <p class="text-slate-600 mt-2">光子・物質波 ＆ 原子・原子核・素粒子 演習システム</p>
     </header>
 
     <div id="menu" class="grid grid-cols-1 gap-4 mb-8">
-        <!-- 追加された第8回 -->
         <button onclick="startSession(8)" class="bg-white p-4 rounded-xl shadow border-l-4 border-indigo-500 text-left hover:bg-indigo-50 transition">
             <h2 class="font-bold">第8回：光子と物質波</h2>
-            <p class="text-sm text-slate-500">演習11〜14 ＋ 応用問題（コンプトン効果・物質波）</p>
+            <p class="text-sm text-slate-500">演習11〜14 ＋ 応用問題</p>
         </button>
         <button onclick="startSession(9)" class="bg-white p-4 rounded-xl shadow border-l-4 border-blue-500 text-left hover:bg-blue-50 transition">
             <h2 class="font-bold">第9回：原子の構造とスペクトル</h2>
@@ -61,6 +60,15 @@
         <button onclick="startSession(13)" class="bg-white p-4 rounded-xl shadow border-l-4 border-purple-500 text-left hover:bg-purple-50 transition">
             <h2 class="font-bold">第13回：放射線の性質</h2>
             <p class="text-sm text-slate-500">演習29, 30</p>
+        </button>
+        <!-- 追加セッション -->
+        <button onclick="startSession(14)" class="bg-white p-4 rounded-xl shadow border-l-4 border-orange-500 text-left hover:bg-orange-50 transition">
+            <h2 class="font-bold">第14回：核反応とエネルギー</h2>
+            <p class="text-sm text-slate-500">演習31, 32（質量欠損・結合エネルギー）</p>
+        </button>
+        <button onclick="startSession(15)" class="bg-white p-4 rounded-xl shadow border-l-4 border-pink-500 text-left hover:bg-pink-50 transition">
+            <h2 class="font-bold">第15回：素粒子とクォーク模型</h2>
+            <p class="text-sm text-slate-500">演習35〜38（核融合・クォークの電荷）</p>
         </button>
     </div>
 
@@ -102,64 +110,33 @@ const questions = [
         id: 12.1, session: 8, title: "演習12(1)：打球の物質波",
         text: "質量 $0.15 \text{ kg}$、時速 $193 \text{ km}$（約 $53.6 \text{ m/s}$）の打球の物質波の波長 $\lambda$ を求めよ。<br><small>$h = 6.6 \times 10^{-34} \text{ J}\cdot\text{s}$</small>",
         type: "input", answer: "8.2e-35", unit: "m", digits: 2,
-        explanation: "ドブロイの式 $\lambda = \frac{h}{mv}$ を用います。<br>$$ \lambda = \frac{6.6 \times 10^{-34}}{0.15 \times 53.6} \approx 8.208 \times 10^{-35} \text{ m} $$<br>極めて短い波長であり、マクロな物体では波動性は無視できることがわかります。"
+        explanation: "ドブロイの式 $\lambda = \frac{h}{mv}$ を用います。"
     },
     {
         id: 13.1, session: 8, title: "演習13(1)：電子波の波長",
         text: "電圧 $V$ で加速された電子（質量 $m$, 電荷 $-e$）の物質波の波長 $\lambda$ を表す式はどれか。",
         type: "select", options: ["$\lambda = \frac{h}{\sqrt{2meV}}$", "$\lambda = \frac{h}{\sqrt{meV}}$", "$\lambda = \frac{\sqrt{2meV}}{h}$"],
         answer: "$\lambda = \frac{h}{\sqrt{2meV}}$",
-        explanation: "エネルギー保存則 $eV = \frac{p^2}{2m}$ より $p = \sqrt{2meV}$ です。これをドブロイの式 $\lambda = h/p$ に代入すると導けます。"
-    },
-    {
-        id: 14.1, session: 8, title: "演習14(1)：電子の速さ",
-        text: "波長 $\lambda = 5.0 \times 10^{-11} \text{ m}$ をもつ電子の速さ $v$ を求めよ。<br><small>$h = 6.6 \times 10^{-34}, m = 9.1 \times 10^{-31} \text{ kg}$</small>",
-        type: "input", answer: "1.5e7", unit: "m/s", digits: 2,
-        explanation: "$v = \frac{h}{m\lambda}$ より、<br>$$ v = \frac{6.6 \times 10^{-34}}{9.1 \times 10^{-31} \times 5.0 \times 10^{-11}} \approx 1.45 \times 10^7 \text{ m/s} $$"
-    },
-    {
-        id: "8-app1", session: 8, title: "応用：加速電圧と波長",
-        text: "電子顕微鏡において、加速電圧を $100 \text{ V}$ から $400 \text{ V}$ に上げました。このとき、電子波の波長は何倍になりますか。",
-        type: "select", options: ["$1/2$ 倍", "$2$ 倍", "$1/4$ 倍", "$4$ 倍"],
-        answer: "$1/2$ 倍",
-        explanation: "$\lambda = \frac{h}{\sqrt{2meV}}$ より、波長は電圧の平方根に反比例します。電圧が4倍になると、分母が $\sqrt{4}=2$ になるため、波長は $1/2$ 倍になります。"
-    },
-    {
-        id: "8-app2", session: 8, title: "応用：分解能",
-        text: "電子顕微鏡の分解能は、波長が短いほど良くなります。電圧を $100 \text{ V} \rightarrow 400 \text{ V}$ にしたとき、分解能はどう変化するか。",
-        type: "select", options: ["良くなる（識別できる距離が小さくなる）", "悪くなる（識別できる距離が大きくなる）", "変化しない"],
-        answer: "良くなる（識別できる距離が小さくなる）",
-        explanation: "電圧を上げると波長が短くなるため、より微細な構造を識別できるようになり、分解能が向上します。"
-    },
-    {
-        id: "8-app3", session: 8, title: "応用：光学顕微鏡との比較",
-        text: "電子顕微鏡が光学顕微鏡より圧倒的に分解能が優れている最大の理由はどれか。",
-        type: "select", options: ["電子波の波長が可視光より圧倒的に短いから", "電子は電荷を持っていて曲げやすいから", "電子の速度が光速に近いから"],
-        answer: "電子波の波長が可視光より圧倒的に短いから",
-        explanation: "分解能は波長に比例します。可視光の波長（数百nm）に比べ、電子波の波長（加速電圧によりますが0.01nm程度も可能）は圧倒的に短いため、より細かいものが観察できます。"
+        explanation: "エネルギー保存則 $eV = p^2/(2m)$ より $p = \sqrt{2meV}$。これを $\lambda = h/p$ に代入します。"
     },
 
     // --- 第9回 ---
     {
         id: "9-f1", session: 9, title: "第9回：公式確認",
         text: "光子のエネルギー $E$ を表す正しい式はどれですか？",
-        type: "select", options: ["$E = h\nu = \frac{hc}{\\lambda}$", "$E = \\frac{h}{\\nu}$", "$E = h\\lambda$"],
-        answer: "$E = h\\nu = \frac{hc}{\\lambda}$", 
+        type: "select", options: ["$E = h\nu = \frac{hc}{\lambda}$", "$E = \frac{h}{\nu}$", "$E = h\lambda$"],
+        answer: "$E = h\nu = \frac{hc}{\lambda}$", 
         explanation: "光子のエネルギーは振動数に比例します。"
     },
-    {
-        id: 15.3, session: 9, title: "演習15(3)",
-        text: "$5.0 \text{ MeV}$ の $\alpha$ 粒子が金の原子($Z=79$)に入射するときの最接近距離 $d \text{ [m]}$ を求めよ。",
-        type: "input", answer: "4.6e-14", unit: "m", digits: 2,
-        explanation: "$d = \frac{2k_0Ze^2}{K}$ です。"
-    },
+
     // --- 第10回 ---
     {
         id: 18.1, session: 10, title: "演習18(1)",
         text: "水素原子の基底状態のエネルギー $E_1 \text{ [J]}$ を求めよ。",
         type: "input", answer: "-2.2e-18", unit: "J", digits: 2,
-        explanation: "$E_1 \approx -2.178 \times 10^{-18} \text{ J}$。"
+        explanation: "$E_1 \approx -2.18 \times 10^{-18} \text{ J}$。"
     },
+
     // --- 第11回 ---
     {
         id: 21, session: 11, title: "演習21",
@@ -167,19 +144,76 @@ const questions = [
         type: "input", answer: "14", unit: "個", digits: 0,
         explanation: "$27 - 13 = 14$ です。"
     },
+
     // --- 第12回 ---
     {
         id: 26, session: 12, title: "演習26",
         text: "$^{232}_{90}\text{Th} \rightarrow ^{208}_{82}\text{Pb}$ の過程で $\beta$ 崩壊は何回起きるか。",
         type: "input", answer: "4", unit: "回", digits: 0,
-        explanation: "$\alpha$崩壊6回、$\beta$崩壊4回です。"
+        explanation: "$\alpha$崩壊6回で原子番号は $90-12=78$。$\beta$崩壊で原子番号が1ずつ増えるので、$82-78=4$回です。"
     },
+
     // --- 第13回 ---
     {
         id: 29, session: 13, title: "演習29",
         text: "割合が $1/8$ の木片の年代（半減期 5700年）。",
         type: "input", answer: "1.7e4", unit: "年前", digits: 2,
-        explanation: "$3 \times 5700 = 17100$ 年。"
+        explanation: "$(1/2)^3 = 1/8$ なので 3半減期分。$3 \times 5700 = 17100$ 年。"
+    },
+
+    // --- 第14回 ---
+    {
+        id: 31, session: 14, title: "演習31：1uのエネルギー換算",
+        text: "原子質量単位 $1 \text{ u}$ の質量に相当するエネルギーは何 $\text{ MeV}$ か。<br><small>$1 \text{ u} = 1.66054 \times 10^{-27} \text{ kg}, c = 2.99792 \times 10^8 \text{ m/s}, e = 1.6022 \times 10^{-19} \text{ C}$</small>",
+        type: "input", answer: "931.5", unit: "MeV", digits: 4,
+        explanation: "$E = mc^2$ を計算し、最後に $e$ で割って $\text{eV}$ 単位にします。<br>$$ E = \frac{(1.66054 \times 10^{-27}) \times (2.99792 \times 10^8)^2}{1.6022 \times 10^{-19}} \approx 9.315 \times 10^8 \text{ eV} = 931.5 \text{ MeV} $$"
+    },
+    {
+        id: 32.1, session: 14, title: "演習32(1)：ウランの質量欠損",
+        text: "$^{235}_{92}\text{U}$ の原子核質量を $235.0439 \text{ u}$ とする。質量欠損 $\Delta m$ はいくらか。<br><small>陽子 $m_p = 1.00728 \text{ u}$, 中性子 $m_n = 1.00866 \text{ u}$</small>",
+        type: "input", answer: "1.9149", unit: "u", digits: 5,
+        explanation: "構成粒子の合計質量と原子核の質量の差を求めます。<br>$\Delta m = (92 \times 1.00728 + 143 \times 1.00866) - 235.0439 = 1.91494 \text{ u}$。"
+    },
+    {
+        id: 32.2, session: 14, title: "演習32(2)：結合エネルギー",
+        text: "$^{235}_{92}\text{U}$ の「1核子あたりの結合エネルギー」は何 $\text{ MeV}$ か。<br><small>$\Delta m = 1.9149 \text{ u}, 1 \text{ u} = 931.48 \text{ MeV}$</small>",
+        type: "input", answer: "7.59", unit: "MeV/A", digits: 3,
+        explanation: "全結合エネルギーは $1.9149 \times 931.48 \approx 1783.7 \text{ MeV}$。これを核子数 $235$ で割ると、約 $7.59 \text{ MeV}$ となります。"
+    },
+
+    // --- 第15回 ---
+    {
+        id: 35.1, session: 15, title: "演習35(1)：核融合",
+        text: "2個の陽子 $^{1}\text{H}$ と2個の中性子 $\text{n}$ が結合して $^{4}\text{He}$ が生成する反応式を選べ。",
+        type: "select", options: ["$2^{1}_{1}\text{H} + 2^{1}_{0}\text{n} \rightarrow ^{4}_{2}\text{He}$", "$^{2}_{1}\text{H} + ^{2}_{1}\text{H} \rightarrow ^{4}_{2}\text{He}$", "$4^{1}_{1}\text{H} \rightarrow ^{4}_{2}\text{He} + 2\text{e}^+$"],
+        answer: "$2^{1}_{1}\text{H} + 2^{1}_{0}\text{n} \rightarrow ^{4}_{2}\text{He}$",
+        explanation: "陽子（水素原子核）2個と中性子2個がそのまま合体する反応です。"
+    },
+    {
+        id: 35.2, session: 15, title: "演習35(2)：ヘリウム合成の質量減少",
+        text: "反応後の質量減少 $\Delta m$ は何 $\text{ kg}$ か。<br><small>H:1.0073u, n:1.0087u, He:4.0015u, 1u=1.66e-27kg</small>",
+        type: "input", answer: "5.06e-29", unit: "kg", digits: 3,
+        explanation: "原子質量単位での減少分は $(2 \times 1.0073 + 2 \times 1.0087) - 4.0015 = 0.0305 \text{ u}$。これを $\text{kg}$ に直すと $0.0305 \times 1.66 \times 10^{-27} \approx 5.06 \times 10^{-29} \text{ kg}$。"
+    },
+    {
+        id: 36.1, session: 15, title: "演習36(1)：太陽の核融合",
+        text: "$4^{1}_{1}\text{H} \rightarrow ^{4}_{2}\text{He} + 2\text{e}^+$ の反応で、もとの質量の何 $\text{ %}$ が減少するか。<br><small>H:1.0073u, He:4.0015u, e:0.0005u</small>",
+        type: "input", answer: "0.66", unit: "%", digits: 2,
+        explanation: "減少分：$4 \times 1.0073 - (4.0015 + 2 \times 0.0005) = 0.0267 \text{ u}$。<br>割合：$(0.0267 / (4 \times 1.0073)) \times 100 \approx 0.662 \text{ %}$。"
+    },
+    {
+        id: 37, session: 15, title: "演習37：クォークの電荷",
+        text: "陽子(uud)の電荷が $+e$、中性子(udd)の電荷が $0$ であるとき、uクォークとdクォークの電荷の組み合わせとして正しいものは？",
+        type: "select", options: ["u: $+\frac{2}{3}e, \text{ d: } -\frac{1}{3}e$", "u: $+\frac{1}{3}e, \text{ d: } -\frac{2}{3}e$", "u: $+e, \text{ d: } -e$"],
+        answer: "u: $+\frac{2}{3}e, \text{ d: } -\frac{1}{3}e$",
+        explanation: "連立方程式 $2q_u + q_d = e$ と $q_u + 2q_d = 0$ を解くと導かれます。"
+    },
+    {
+        id: 38, session: 15, title: "演習38：中間子の構成",
+        text: "電荷が $+e$ である $\pi^+$ 中間子は、どのクォークと反クォークの組み合わせか？",
+        type: "select", options: ["$\text{u}\bar{\text{d}}$", "$\text{u}\bar{\text{u}}$", "$\text{d}\bar{\text{u}}$"],
+        answer: "$\text{u}\bar{\text{d}}$",
+        explanation: "uの電荷は $+2/3e$、$\bar{\text{d}}$（dの反粒子）の電荷は $+1/3e$（dの符号反転）なので、合計で $+e$ となります。"
     }
 ];
 
@@ -224,7 +258,7 @@ function showQuestion() {
         inputWrap.className = "flex items-center space-x-3";
         const input = document.createElement('input');
         input.type = "text";
-        input.placeholder = "例: 1.5e7 または 14";
+        input.placeholder = "例: 931.5 や 5.06e-29";
         input.className = "flex-1 p-4 border-2 border-slate-200 rounded-xl focus:border-blue-500 outline-none text-xl font-mono";
         input.id = "user-input";
         inputWrap.appendChild(input);
@@ -306,7 +340,7 @@ function nextQuestion() {
     if (currentQuestionIndex < currentSessionQuestions.length) {
         showQuestion();
     } else {
-        alert("セッション完了！");
+        alert("セッション完了！メニューに戻ります。");
         backToMenu();
     }
 }
