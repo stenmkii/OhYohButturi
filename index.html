@@ -33,10 +33,15 @@
 <div id="app" class="max-w-3xl mx-auto p-4 md:p-8">
     <header class="mb-8 text-center">
         <h1 class="text-3xl font-bold text-slate-800">原子物理・原子核 演習</h1>
-        <p class="text-slate-600 mt-2">全演習問題（15〜30）収録版</p>
+        <p class="text-slate-600 mt-2">光子・物質波 ＆ 原子・原子核 演習システム</p>
     </header>
 
     <div id="menu" class="grid grid-cols-1 gap-4 mb-8">
+        <!-- 追加された第8回 -->
+        <button onclick="startSession(8)" class="bg-white p-4 rounded-xl shadow border-l-4 border-indigo-500 text-left hover:bg-indigo-50 transition">
+            <h2 class="font-bold">第8回：光子と物質波</h2>
+            <p class="text-sm text-slate-500">演習11〜14 ＋ 応用問題（コンプトン効果・物質波）</p>
+        </button>
         <button onclick="startSession(9)" class="bg-white p-4 rounded-xl shadow border-l-4 border-blue-500 text-left hover:bg-blue-50 transition">
             <h2 class="font-bold">第9回：原子の構造とスペクトル</h2>
             <p class="text-sm text-slate-500">公式 ＋ 演習15, 16</p>
@@ -78,151 +83,103 @@
 
 <script>
 const questions = [
+    // --- 第8回 ---
+    {
+        id: 11.1, session: 8, title: "演習11(1)：コンプトン効果",
+        text: "コンプトン散乱における「運動量保存の法則」を考えます。入射光子の運動量を $p$、散乱光子の運動量を $p'$、電子の運動量を $p_e$ としたとき、ベクトルによる正しい表現はどれですか？",
+        type: "select", options: ["$\vec{p} = \vec{p}' + \vec{p}_e$", "$\vec{p} + \vec{p}' = \vec{p}_e$", "$p = p' + p_e$ (スカラー和)"],
+        answer: "$\vec{p} = \vec{p}' + \vec{p}_e$",
+        explanation: "運動量はベクトル量です。入射した光子の運動量は、散乱された光子の運動量と、はじき飛ばされた電子の運動量の和に等しくなります。"
+    },
+    {
+        id: 11.2, session: 8, title: "演習11(2)：コンプトン効果",
+        text: "エネルギー保存の法則の式として正しいものを選びなさい。（散乱後の電子の速さを $v$ とする。非相対論的扱い）",
+        type: "select", options: ["$\frac{hc}{\lambda} = \frac{hc}{\lambda'} + \frac{1}{2}mv^2$", "$\frac{hc}{\lambda} + \frac{hc}{\lambda'} = \frac{1}{2}mv^2$", "$\frac{h}{\lambda} = \frac{h}{\lambda'} + mv$"],
+        answer: "$\frac{hc}{\lambda} = \frac{hc}{\lambda'} + \frac{1}{2}mv^2$",
+        explanation: "入射光子のエネルギー $E=hc/\lambda$ は、散乱光子のエネルギー $E'=hc/\lambda'$ と、電子が受け取った運動エネルギー $K=\frac{1}{2}mv^2$ の和になります。"
+    },
+    {
+        id: 12.1, session: 8, title: "演習12(1)：打球の物質波",
+        text: "質量 $0.15 \text{ kg}$、時速 $193 \text{ km}$（約 $53.6 \text{ m/s}$）の打球の物質波の波長 $\lambda$ を求めよ。<br><small>$h = 6.6 \times 10^{-34} \text{ J}\cdot\text{s}$</small>",
+        type: "input", answer: "8.2e-35", unit: "m", digits: 2,
+        explanation: "ドブロイの式 $\lambda = \frac{h}{mv}$ を用います。<br>$$ \lambda = \frac{6.6 \times 10^{-34}}{0.15 \times 53.6} \approx 8.208 \times 10^{-35} \text{ m} $$<br>極めて短い波長であり、マクロな物体では波動性は無視できることがわかります。"
+    },
+    {
+        id: 13.1, session: 8, title: "演習13(1)：電子波の波長",
+        text: "電圧 $V$ で加速された電子（質量 $m$, 電荷 $-e$）の物質波の波長 $\lambda$ を表す式はどれか。",
+        type: "select", options: ["$\lambda = \frac{h}{\sqrt{2meV}}$", "$\lambda = \frac{h}{\sqrt{meV}}$", "$\lambda = \frac{\sqrt{2meV}}{h}$"],
+        answer: "$\lambda = \frac{h}{\sqrt{2meV}}$",
+        explanation: "エネルギー保存則 $eV = \frac{p^2}{2m}$ より $p = \sqrt{2meV}$ です。これをドブロイの式 $\lambda = h/p$ に代入すると導けます。"
+    },
+    {
+        id: 14.1, session: 8, title: "演習14(1)：電子の速さ",
+        text: "波長 $\lambda = 5.0 \times 10^{-11} \text{ m}$ をもつ電子の速さ $v$ を求めよ。<br><small>$h = 6.6 \times 10^{-34}, m = 9.1 \times 10^{-31} \text{ kg}$</small>",
+        type: "input", answer: "1.5e7", unit: "m/s", digits: 2,
+        explanation: "$v = \frac{h}{m\lambda}$ より、<br>$$ v = \frac{6.6 \times 10^{-34}}{9.1 \times 10^{-31} \times 5.0 \times 10^{-11}} \approx 1.45 \times 10^7 \text{ m/s} $$"
+    },
+    {
+        id: "8-app1", session: 8, title: "応用：加速電圧と波長",
+        text: "電子顕微鏡において、加速電圧を $100 \text{ V}$ から $400 \text{ V}$ に上げました。このとき、電子波の波長は何倍になりますか。",
+        type: "select", options: ["$1/2$ 倍", "$2$ 倍", "$1/4$ 倍", "$4$ 倍"],
+        answer: "$1/2$ 倍",
+        explanation: "$\lambda = \frac{h}{\sqrt{2meV}}$ より、波長は電圧の平方根に反比例します。電圧が4倍になると、分母が $\sqrt{4}=2$ になるため、波長は $1/2$ 倍になります。"
+    },
+    {
+        id: "8-app2", session: 8, title: "応用：分解能",
+        text: "電子顕微鏡の分解能は、波長が短いほど良くなります。電圧を $100 \text{ V} \rightarrow 400 \text{ V}$ にしたとき、分解能はどう変化するか。",
+        type: "select", options: ["良くなる（識別できる距離が小さくなる）", "悪くなる（識別できる距離が大きくなる）", "変化しない"],
+        answer: "良くなる（識別できる距離が小さくなる）",
+        explanation: "電圧を上げると波長が短くなるため、より微細な構造を識別できるようになり、分解能が向上します。"
+    },
+    {
+        id: "8-app3", session: 8, title: "応用：光学顕微鏡との比較",
+        text: "電子顕微鏡が光学顕微鏡より圧倒的に分解能が優れている最大の理由はどれか。",
+        type: "select", options: ["電子波の波長が可視光より圧倒的に短いから", "電子は電荷を持っていて曲げやすいから", "電子の速度が光速に近いから"],
+        answer: "電子波の波長が可視光より圧倒的に短いから",
+        explanation: "分解能は波長に比例します。可視光の波長（数百nm）に比べ、電子波の波長（加速電圧によりますが0.01nm程度も可能）は圧倒的に短いため、より細かいものが観察できます。"
+    },
+
     // --- 第9回 ---
     {
         id: "9-f1", session: 9, title: "第9回：公式確認",
-        text: "光子のエネルギー $E$ を表す正しい式はどれですか？<br>($h$:プランク定数, $\\nu$:振動数, $c$:光速度, $\\lambda$:波長)",
-        type: "select", options: ["$E = h\\nu = \\frac{hc}{\\lambda}$", "$E = \\frac{h}{\\nu} = \\frac{h\\lambda}{c}$", "$E = h\\lambda = \\frac{hc}{\\nu}$"],
-        answer: "$E = h\\nu = \\frac{hc}{\\lambda}$", 
-        explanation: "光子のエネルギーは振動数に比例します。$c = \\nu\\lambda$ より $\\nu = c/\\lambda$ なので、$E = h\\nu = hc/\\lambda$ です。"
-    },
-    {
-        id: 15.1, session: 9, title: "演習15(1)",
-        text: "原子核(原子番号 $Z$)から距離 $r$ の位置にある $\\alpha$ 粒子(電荷 $+2e$)の静電気力による位置エネルギー $U$ を求めよ。",
-        type: "select", options: ["$k_0 \\frac{2Ze^2}{r}$", "$k_0 \\frac{Ze^2}{r}$", "$k_0 \\frac{2Ze^2}{r^2}$"],
-        answer: "$k_0 \\frac{2Ze^2}{r}$",
-        explanation: "$U = k_0 \\frac{q_1q_2}{r}$ より、$q_1=2e, q_2=Ze$ を代入します。"
+        text: "光子のエネルギー $E$ を表す正しい式はどれですか？",
+        type: "select", options: ["$E = h\nu = \frac{hc}{\\lambda}$", "$E = \\frac{h}{\\nu}$", "$E = h\\lambda$"],
+        answer: "$E = h\\nu = \frac{hc}{\\lambda}$", 
+        explanation: "光子のエネルギーは振動数に比例します。"
     },
     {
         id: 15.3, session: 9, title: "演習15(3)",
-        text: "$5.0 \\text{ MeV}$ の運動エネルギーを持った $\\alpha$ 粒子が金の原子($Z=79$)に入射するとき、もっとも近づける距離 $d \\text{ [m]}$ を求めよ。<br><small>$e=1.6\\times 10^{-19} \\text{ C}, k_0=9.0\\times 10^9, 1\\text{eV}=1.6\\times 10^{-19} \\text{ J}$</small>",
+        text: "$5.0 \text{ MeV}$ の $\alpha$ 粒子が金の原子($Z=79$)に入射するときの最接近距離 $d \text{ [m]}$ を求めよ。",
         type: "input", answer: "4.6e-14", unit: "m", digits: 2,
-        explanation: "エネルギー保存則 $K = k_0 \\frac{2Ze^2}{d}$ より $d = \\frac{2k_0Ze^2}{K}$ です。"
-    },
-    {
-        id: 16, session: 9, title: "演習16",
-        text: "水素のスペクトルのうち、可視光領域にある系列を何というか。",
-        type: "select", options: ["バルマー系列", "ライマン系列", "パッシェン系列"],
-        answer: "バルマー系列",
-        explanation: "ライマン系列は紫外、バルマーは可視、パッシェンは赤外領域です。"
+        explanation: "$d = \frac{2k_0Ze^2}{K}$ です。"
     },
     // --- 第10回 ---
     {
-        id: "10-f1", session: 10, title: "第10回：公式確認",
-        text: "ボーアの量子条件として正しい式を選べ。",
-        type: "select", options: ["$mvr = n\\frac{h}{2\\pi}$", "$2\\pi r = n\\frac{h}{mv}$", "両方正しい"],
-        answer: "両方正しい",
-        explanation: "角運動量の条件と、軌道一周がド・ブロイ波長の整数倍という条件は同値です。"
-    },
-    {
-        id: 17, session: 10, title: "演習17",
-        text: "水素原子の量子数 $n$ の軌道半径 $r_n$ は $n^2$ に比例するか。",
-        type: "select", options: ["比例する", "反比例する", "関係ない"],
-        answer: "比例する",
-        explanation: "ボーアモデルより $r_n = \\frac{\\epsilon_0 h^2}{\\pi m e^2} n^2$ と導かれます。"
-    },
-    {
         id: 18.1, session: 10, title: "演習18(1)",
-        text: "水素原子の基底状態($n=1$)のエネルギー $E_1 \\text{ [J]}$ はいくらか。<br><small>$h=6.6\\times 10^{-34}, c=3.0\\times 10^8, R=1.1\\times 10^7$</small>",
+        text: "水素原子の基底状態のエネルギー $E_1 \text{ [J]}$ を求めよ。",
         type: "input", answer: "-2.2e-18", unit: "J", digits: 2,
-        explanation: "$E_n = -\\frac{hcR}{n^2}$ に $n=1$ を代入。$E_1 \approx -2.178 \\times 10^{-18} \\text{ J}$。"
-    },
-    {
-        id: 19, session: 10, title: "演習19",
-        text: "水素原子を基底状態からイオン化（$n=\\infty$）するのに必要なエネルギー（イオン化エネルギー）は $E_1$ を用いてどう表せるか。",
-        type: "select", options: ["$-E_1$", "$E_1$", "$0$"],
-        answer: "$-E_1$",
-        explanation: "$E_{\\infty} - E_1 = 0 - E_1 = -E_1$ です。$E_1$ 自体が負なので、全体で正のエネルギーが必要です。"
-    },
-    {
-        id: 20, session: 10, title: "演習20",
-        text: "基底状態の水素原子に $15 \\text{ eV}$ の光子を衝突させた。電子は放出されるか。",
-        type: "select", options: ["放出される", "放出されない"],
-        answer: "放出される",
-        explanation: "イオン化エネルギーは約 $13.6 \\text{ eV}$ なので、それ以上のエネルギーを持つ光子を吸収すれば電子は飛び出します。"
+        explanation: "$E_1 \approx -2.178 \times 10^{-18} \text{ J}$。"
     },
     // --- 第11回 ---
     {
         id: 21, session: 11, title: "演習21",
-        text: "$^{27}_{13}\\text{Al}$ 原子核に含まれる中性子の数はいくつか。",
+        text: "$^{27}_{13}\text{Al}$ 原子核に含まれる中性子の数はいくつか。",
         type: "input", answer: "14", unit: "個", digits: 0,
-        explanation: "質量数 $27$ - 原子番号 $13 = 14$ です。"
-    },
-    {
-        id: 22, session: 11, title: "演習22",
-        text: "原子番号が同じで、質量数が異なる原子同士を何というか。",
-        type: "select", options: ["同位体（アイソトープ）", "同素体", "同重体"],
-        answer: "同位体（アイソトープ）",
-        explanation: "化学的性質はほぼ同じですが、中性子の数が異なります。"
-    },
-    {
-        id: 23, session: 11, title: "演習23",
-        text: "原子核を構成する陽子と中性子を総称して何というか。",
-        type: "select", options: ["核子（ヌクレオン）", "光子", "電子"],
-        answer: "核子（ヌクレオン）",
-        explanation: "原子核（Nucleus）の構成員なのでヌクレオンです。"
+        explanation: "$27 - 13 = 14$ です。"
     },
     // --- 第12回 ---
     {
-        id: "12-f1", session: 12, title: "第12回：公式確認",
-        text: "$\\beta$ 崩壊（負のベータ崩壊）の際、原子核内で何が起きているか。",
-        type: "select", options: ["中性子が陽子と電子に変わる", "陽子が中性子と電子に変わる", "$\\alpha$ 粒子が放出される"],
-        answer: "中性子が陽子と電子に変わる",
-        explanation: "中性子が陽子に変わるため、質量数は変わらず、原子番号が $1$ 増えます。"
-    },
-    {
-        id: 24, session: 12, title: "演習24",
-        text: "$^{14}_{6}\\text{C}$ が $\\beta$ 崩壊してできる原子核はどれか。",
-        type: "select", options: ["$^{14}_{7}\\text{N}$", "$^{10}_{4}\\text{Be}$", "$^{14}_{5}\\text{B}$"],
-        answer: "$^{14}_{7}\\text{N}$",
-        explanation: "原子番号が $6 \rightarrow 7$ に増えます。"
-    },
-    {
-        id: 25, session: 12, title: "演習25",
-        text: "$\\alpha$ 崩壊を1回行うと、質量数はいくつ減少するか。",
-        type: "input", answer: "4", unit: "", digits: 0,
-        explanation: "$\\alpha$ 粒子（ヘリウム核）は陽子2個、中性子2個なので質量数は $4$ 減ります。"
-    },
-    {
         id: 26, session: 12, title: "演習26",
-        text: "$^{232}_{90}\\text{Th} \rightarrow ^{208}_{82}\\text{Pb}$ の過程で $\\beta$ 崩壊は何回起きるか。",
+        text: "$^{232}_{90}\text{Th} \rightarrow ^{208}_{82}\text{Pb}$ の過程で $\beta$ 崩壊は何回起きるか。",
         type: "input", answer: "4", unit: "回", digits: 0,
-        explanation: "$\\alpha$ 崩壊が6回起きて原子番号が $78$ になり、そこから $\\beta$ 崩壊で $82$ まで戻ります。"
-    },
-    {
-        id: 27, session: 12, title: "演習27",
-        text: "放射性物質の量が半分になる時間を何というか。",
-        type: "select", options: ["半減期", "平均寿命", "活動期"],
-        answer: "半減期",
-        explanation: "その物質固有の定数です。"
-    },
-    {
-        id: 28, session: 12, title: "演習28",
-        text: "半減期が $T$ の物質が、時間 $3T$ 経過したとき、元の量の何倍になるか。",
-        type: "select", options: ["$1/8$ 倍", "$1/6$ 倍", "$1/4$ 倍"],
-        answer: "$1/8$ 倍",
-        explanation: "$(1/2)^3 = 1/8$ です。"
+        explanation: "$\alpha$崩壊6回、$\beta$崩壊4回です。"
     },
     // --- 第13回 ---
     {
         id: 29, session: 13, title: "演習29",
-        text: "$^{14}\\text{C}$ の割合が $1/8$ の木片がある。年代を推定せよ。（半減期 $5700$ 年）",
+        text: "割合が $1/8$ の木片の年代（半減期 5700年）。",
         type: "input", answer: "1.7e4", unit: "年前", digits: 2,
         explanation: "$3 \times 5700 = 17100$ 年。"
-    },
-    {
-        id: 30.1, session: 13, title: "演習30(1)",
-        text: "電磁波である放射線はどれか。",
-        type: "select", options: ["$\\gamma$ 線", "$\\alpha$ 線", "$\\beta$ 線"],
-        answer: "$\\gamma$ 線",
-        explanation: "$\\alpha$ はヘリウム核、$\\beta$ は電子の粒子線です。"
-    },
-    {
-        id: 30.2, session: 13, title: "演習30(2)",
-        text: "最も電離作用（物質をイオン化する力）が強いのはどれか。",
-        type: "select", options: ["$\\alpha$ 線", "$\\beta$ 線", "$\\gamma$ 線"],
-        answer: "$\\alpha$ 線",
-        explanation: "電荷が大きく速度が遅いため、周囲の原子に強く干渉します。"
     }
 ];
 
@@ -267,7 +224,7 @@ function showQuestion() {
         inputWrap.className = "flex items-center space-x-3";
         const input = document.createElement('input');
         input.type = "text";
-        input.placeholder = "例: 2.0 x 10^5 → 2.0e-5";
+        input.placeholder = "例: 1.5e7 または 14";
         input.className = "flex-1 p-4 border-2 border-slate-200 rounded-xl focus:border-blue-500 outline-none text-xl font-mono";
         input.id = "user-input";
         inputWrap.appendChild(input);
@@ -349,7 +306,7 @@ function nextQuestion() {
     if (currentQuestionIndex < currentSessionQuestions.length) {
         showQuestion();
     } else {
-        alert("このセッションを完了しました！メニューに戻ります。");
+        alert("セッション完了！");
         backToMenu();
     }
 }
